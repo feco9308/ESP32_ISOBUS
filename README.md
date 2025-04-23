@@ -1,11 +1,10 @@
 # ESP32_ISOBUS
 
 Fejlesztési ötletek: 
- - PCA illesztése
- - IOP fáj szerkesztése:
-       - Szekció szélesség állítás
-       - zónák számának állítása
-       - Tartály szerkesztése
-   
+- PCA illesztése   
 - Átfolyásmérő beállítása
-- Nyomás mérő 
+- Nyomás mérő
+- IOP fáj szerkesztése:
+  - Szekció szélesség állítás
+  - zónák számának állítása
+  - Tartály szerkesztése
