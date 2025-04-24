@@ -40,6 +40,7 @@ Freenove_ESP32_WS2812 strip = Freenove_ESP32_WS2812(LEDS_COUNT, LEDS_PIN, CHANNE
 #include <iostream>
 #include <memory>
 #include "esp_mac.h"
+#include "pca9685_handler.hpp"
 
 
 std::atomic_bool running = { true };
@@ -136,6 +137,8 @@ extern "C" void app_main()
 
 	VTApplication = std::make_unique<SeederVtApplication>(PartnerVT, PartnerTC, InternalECU);
 	VTApplication->initialize();
+
+	PCA9685Handler::init();
 
 		while (running)
 		if (nullptr != VTApplication)
