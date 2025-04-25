@@ -8,9 +8,7 @@
 #include "driver/i2c.h"
 #include "pca9685_handler.hpp"
 #include "esp_log.h"
-
 #include "freertos/task.h"
-#include "esp_log.h"
 
 namespace PCA9685Handler {
 

@@ -50,6 +50,7 @@ private:
 	{
 		NoMachineSpeed, ///< No MSS message, needed for section control
 		NoTaskController, ///< No TC, makes the demo less interesting
+		NoPCA,
 
 		Count ///< The number of alarm types
 	};
@@ -127,6 +128,9 @@ private:
 
 	/// @brief Called cyclically by the update routine, checks if any alarm masks need to be shown to the user
 	void update_alarms();
+
+	/// @brief Called cyclically by the update routine, checks if any outputs (LED) need to be changed
+	void update_pca();
 
 	static constexpr std::uint8_t NUMBER_ONSCREEN_SECTIONS = 6; ///< The number of sections we can display on the screen
 

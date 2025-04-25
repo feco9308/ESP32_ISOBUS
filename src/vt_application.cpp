@@ -27,6 +27,7 @@ SeederVtApplication::SeederVtApplication(std::shared_ptr<isobus::PartneredContro
   speedMessages(source, false, false, false, false)
 {
 	alarms[AlarmType::NoMachineSpeed] = Alarm(10000); // 10 seconds
+	alarms[AlarmType::NoPCA] = Alarm(10000); // 10 seconds
 	alarms[AlarmType::NoTaskController] = Alarm(30000); // 30 seconds, TC can take a while to connect
 }
 extern "C" const uint8_t object_pool_start[] asm("_binary_object_pool_iop_start");
@@ -378,6 +379,7 @@ void SeederVtApplication::update()
 
 		update_alarms();
 		slowUpdateTimestamp_ms = isobus::SystemTiming::get_timestamp_ms();
+		update_pca();
 	}
 	speedMessages.update();
 	for (std::uint8_t i = 0; i < NUMBER_ONSCREEN_SECTIONS; ++i)
@@ -385,6 +387,16 @@ void SeederVtApplication::update()
 		update_section_objects(i);
 	}
 	VTClientUpdateHelper.set_numeric_value(autoManual_ObjPtr, sectionControl.get_is_mode_auto() ? autoMode_Container : manualMode_Container);
+}
+
+void SeederVtApplication::update_pca()
+{
+	for(int i = 0 ; i < sectionControl.get_number_of_sections() ; i++){
+
+		//PCA9685Handler::set_section_state(i, sectionControl.get_section_setpoint_state(i)); //doesn't work with manual mode only with auto
+		//PCA9685Handler::set_section_state(i, sectionControl.get_section_switch_state(i)); //switch state (which is ignored when auto mode is one)
+		PCA9685Handler::set_section_state(i, sectionControl.get_section_actual_state(i)); //		
+	}
 }
 
 void SeederVtApplication::toggle_section(std::uint8_t sectionIndex)
@@ -717,6 +729,14 @@ void SeederVtApplication::update_alarms()
 		{
 			alarms.at(AlarmType::NoTaskController).reset();
 		}
+		if( false == true)//Pca9685.isConnected)
+		{
+			alarms.at(AlarmType::NoPCA).trigger();
+		}
+		else
+		{
+			alarms.at(AlarmType::NoPCA).reset();
+		}
 
 		// Show the first alarm that is active (i.e. highest priority)
 		std::size_t activeAlarmsCount = 0;
@@ -736,7 +756,7 @@ void SeederVtApplication::update_alarms()
 						VTClientUpdateHelper.set_numeric_value(currentAlarms1_ObjPtr, NoMachineSpeed_OutStr);
 					}
 					break;
-
+					case AlarmType::NoPCA:
 					case AlarmType::NoTaskController:
 					{
 						if (1 == activeAlarmsCount)
