@@ -139,6 +139,7 @@ extern "C" void app_main()
 	VTApplication->initialize();
 
 	PCA9685Handler::init();
+	vTaskDelay(1500);
 
 		while (running)
 		if (nullptr != VTApplication)
