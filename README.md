@@ -1,7 +1,7 @@
 # ESP32_ISOBUS
 
 Fejlesztési ötletek: 
-- PCA illesztése (Tesztelni kell! )   
+- PCA illesztése (Müködik )   
 - Átfolyásmérő beállítása
 - Nyomás mérő
 - IOP fáj szerkesztése:
