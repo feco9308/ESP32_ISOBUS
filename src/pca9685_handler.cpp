@@ -84,10 +84,10 @@ namespace PCA9685Handler {
     
         if (active) {
             pca9685_set_pwm_value(&dev, index, 4095);  // full on
-            pca9685_set_pwm_value(&dev, index+1, 4095);  // full on
+            pca9685_set_pwm_value(&dev, index+1, 0);  // full on
         } else {
             pca9685_set_pwm_value(&dev, index, 0);     // full off
-            pca9685_set_pwm_value(&dev, index+1, 0);     // full off
+            pca9685_set_pwm_value(&dev, index+1, 4095);     // full off
         }
     }
     
